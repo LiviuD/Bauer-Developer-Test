@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Restaurant Name</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in ViewBag.Restaurants.Rows)
+        {
+            <tr>
+                <td>@row["Name"]</td>
+                <td>@row["PhoneNumber"]</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Restaurant", new { id = row["Id"] }, new { })</td>
+            </tr>
+        }
+    </tbody>
+</table>

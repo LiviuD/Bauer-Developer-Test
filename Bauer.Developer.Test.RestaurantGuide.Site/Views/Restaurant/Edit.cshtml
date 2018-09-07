@@ -1,0 +1,25 @@
+﻿@using Bauer.Developer.Test.RestaurantGuide.Domain; 
+@model Restaurant
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>@Model.Name</h2>
+
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>@Html.TextBoxFor(m=>m.Name)</td>
+        </tr>
+        <tr>
+            <td>Phone Number</td>
+            <td>@Html.TextBoxFor(m=>m.PhoneNumber)</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Save" />
+
+    <div class="message-success">@ViewBag.Message</div>
+}
