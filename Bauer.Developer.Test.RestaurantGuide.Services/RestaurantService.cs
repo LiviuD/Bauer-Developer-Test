@@ -23,5 +23,14 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services
         {
             return UnitOfWork.Repository<Restaurant>().Find(x => x.Id == id);
         }
+
+        /// <summary>
+        /// Gets all restaurants.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Restaurant> GetAllRestaurants()
+        {
+            return UnitOfWork.Repository<Restaurant>().All();
+        }
     }
 }

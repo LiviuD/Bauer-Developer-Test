@@ -115,7 +115,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BauerDeveloperTestEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BauerDeveloperTestEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Chefs" EntityType="Self.Chef" />
           <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
           <EntitySet Name="RestaurantCuisines" EntityType="Self.RestaurantCuisine" />
@@ -138,7 +138,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BauerDeveloperTestModelStoreContainer" CdmEntityContainer="BauerDeveloperTestEntities1">
+        <EntityContainerMapping StorageEntityContainer="BauerDeveloperTestModelStoreContainer" CdmEntityContainer="BauerDeveloperTestEntities">
           <EntitySetMapping Name="Chefs">
             <EntityTypeMapping TypeName="BauerDeveloperTestModel.Chef">
               <MappingFragment StoreEntitySet="Chef">

@@ -1,23 +1,32 @@
-﻿@{
+﻿@using Bauer.Developer.Test.RestaurantGuide.Domain
+@model List<Restaurant>
+@{
     ViewBag.Title = "Home Page";
 }
-
-<table>
-    <thead>
-        <tr>
-            <th>Restaurant Name</th>
-            <th>Phone Number</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var row in ViewBag.Restaurants.Rows)
-        {
+@if (Model == null || Model.Count == 0)
+{
+    <span>There are no restaurants here, but you may add one:</span>
+    @Html.ActionLink("Add", "Edit", "Restaurant", new { id = 0 }, new { })
+}
+else
+{
+    <table>
+        <thead>
             <tr>
-                <td>@row["Name"]</td>
-                <td>@row["PhoneNumber"]</td>
-                <td>@Html.ActionLink("Edit", "Edit", "Restaurant", new { id = row["Id"] }, new { })</td>
+                <th>Restaurant Name</th>
+                <th>Phone Number</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var restaurant in Model)
+            {
+                <tr>
+                    <td>@restaurant.Name</td>
+                    <td>@restaurant.PhoneNumber</td>
+                    <td>@Html.ActionLink("Edit", "Edit", "Restaurant", new { id = restaurant.Id }, new { })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

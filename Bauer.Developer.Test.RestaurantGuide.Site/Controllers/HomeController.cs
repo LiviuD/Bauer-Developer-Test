@@ -1,28 +1,23 @@
-﻿using System.Configuration;
+﻿using Bauer.Developer.Test.RestaurantGuide.Services;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController<RestaurantService>
     {
+        public HomeController(RestaurantService restaurantService) : base(restaurantService)
+        {
+
+        }
+
         public ActionResult Index()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["DatabaseConnection"].ConnectionString;
-            var connection = new SqlConnection(connectionString);
-            var command = new SqlCommand("SELECT Id, Name, PhoneNumber FROM Restaurant") { Connection = connection };
-            var adapter = new SqlDataAdapter(command);
-
-            using (connection)
-            {
-                var dataSet = new DataSet();
-                adapter.Fill(dataSet);
-
-                ViewBag.Restaurants = dataSet.Tables[0];
-            }
-
-            return View();
+            var restaurants = Service.GetAllRestaurants();
+            return View(restaurants.ToList());
         }
-    }
+    } 
 }

@@ -17,7 +17,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
     public partial class BauerDeveloperTestEntities : DbContext
     {
         public BauerDeveloperTestEntities()
-            : base("name=BauerDeveloperTestEntities1")
+            : base("name=BauerDeveloperTestEntities")
         {
         }
     
