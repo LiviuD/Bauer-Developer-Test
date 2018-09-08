@@ -14,10 +14,10 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BauerDeveloperTestEntities : DbContext
+    public partial class RestaurantGuideEntities : DbContext
     {
-        public BauerDeveloperTestEntities()
-            : base("name=BauerDeveloperTestEntities")
+        public RestaurantGuideEntities()
+            : base("name=RestaurantGuideEntities")
         {
         }
     
@@ -26,9 +26,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Chef> Chefs { get; set; }
-        public virtual DbSet<Restaurant> Restaurants { get; set; }
-        public virtual DbSet<RestaurantCuisine> RestaurantCuisines { get; set; }
         public virtual DbSet<Cuisine> Cuisines { get; set; }
+        public virtual DbSet<Restaurant> Restaurants { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
  output extension=".cs"#><#
 
-const string inputFile = @"..\Bauer.Developer.Test.RestaurantGuide.DataAccess\RestaurantGuide.edmx";
+const string inputFile = @"..\Bauer.Developer.Test.RestaurantGuide.DataAccess\RestaurantGuideModel.edmx";
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);

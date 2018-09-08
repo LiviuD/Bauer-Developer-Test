@@ -14,17 +14,25 @@ namespace Bauer.Developer.Test.RestaurantGuide.Domain
     
     public partial class Restaurant : IEntity
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Restaurant()
+        {
+            this.Cuisines = new HashSet<Cuisine>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> ChefId { get; set; }
-        public Nullable<short> Rating { get; set; }
+        public int CuisineId { get; set; }
+        public string Chef { get; set; }
+        public byte Rating { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string Suburb { get; set; }
         public string State { get; set; }
-        public Nullable<short> PostCode { get; set; }
+        public string PostCode { get; set; }
         public string PhoneNumber { get; set; }
     
-        public virtual Chef Chef { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cuisine> Cuisines { get; set; }
     }
 }

@@ -1,25 +1,70 @@
-﻿@using Bauer.Developer.Test.RestaurantGuide.Domain; 
-@model Restaurant
+﻿@using Bauer.Developer.Test.RestaurantGuide.Domain;
+@using Bauer.Developer.Test.RestaurantGuide.Site.Models;
+@model RestaurantModel
 @{
     ViewBag.Title = "Edit";
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
-
-<h2>@Model.Name</h2>
-
-@using (Html.BeginForm())
+@if (Model != null)
 {
+    <h2>@Model.Name</h2>
+    using (Html.BeginForm())
+    {
     <table>
         <tr>
             <td>Name</td>
-            <td>@Html.TextBoxFor(m=>m.Name)</td>
+            <td>@Html.TextBoxFor(m => m.Name)</td>
+            <td>@Html.ValidationMessageFor(x => x.Name)</td>
         </tr>
         <tr>
             <td>Phone Number</td>
-            <td>@Html.TextBoxFor(m=>m.PhoneNumber)</td>
+            <td>@Html.TextBoxFor(m => m.PhoneNumberFormated, new { placeholder = "(00)0000 0000" })</td>
+            <td>@Html.ValidationMessageFor(x => x.PhoneNumberFormated)</td>
+        </tr>
+        <tr>
+            <td>Chef</td>
+            <td>@Html.TextBoxFor(m => m.Chef)</td>
+            <td>@Html.ValidationMessageFor(x => x.Chef)</td>
+        </tr>
+        <tr>
+            <td>Address 1</td>
+            <td>@Html.TextBoxFor(m => m.AddressLine1)</td>
+            <td>@Html.ValidationMessageFor(x => x.AddressLine1)</td>
+        </tr>
+        <tr>
+            <td>Address 2</td>
+            <td>@Html.TextBoxFor(m => m.AddressLine2)</td>
+            <td>@Html.ValidationMessageFor(x => x.AddressLine2)</td>
+        </tr>
+        <tr>
+            <td>Postcode</td>
+            <td>@Html.TextBoxFor(m => m.PostCode)</td>
+            <td>@Html.ValidationMessageFor(x => x.PostCode)</td>
+        </tr>
+        <tr>
+            <td>Suburb</td>
+            <td>@Html.TextBoxFor(m => m.Suburb)</td>
+            <td>@Html.ValidationMessageFor(x => x.Suburb)</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>@Html.TextBoxFor(m => m.State)</td>
+            <td>@Html.ValidationMessageFor(x => x.State)</td>
+        </tr>
+        <tr>
+            <td>Rating</td>
+            <td>@Html.TextBoxFor(m => m.Rating)</td>
+            <td>@Html.ValidationMessageFor(x => x.Rating)</td>
+        </tr>
+        <tr>
+            <td>Cusine</td>
+            <td>@Html.TextBoxFor(m => m.Cuisine)</td>
+            <td>@Html.ValidationMessageFor(x => x.CuisineId)</td>
         </tr>
     </table>
 
-    <input type="submit" value="Save" />
-
-    <div class="message-success">@ViewBag.Message</div>
+        <input type="submit" value="Save" />
+    }
 }
+<div class="message-success">@ViewBag.Message</div>
+@*@Html.ValidationSummary();*@

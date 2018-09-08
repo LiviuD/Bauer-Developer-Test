@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,13 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chef.cs">
-      <DependentUpon>RestaurantGuide.tt</DependentUpon>
-    </Compile>
     <Compile Include="Cuisine.cs">
       <DependentUpon>RestaurantGuide.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Cuisine.cs" />
     <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\Restaurant.cs" />
     <Compile Include="RestaurantGuide.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -57,9 +57,7 @@
     <Compile Include="Restaurant.cs">
       <DependentUpon>RestaurantGuide.tt</DependentUpon>
     </Compile>
-    <Compile Include="RestaurantCuisine.cs">
-      <DependentUpon>RestaurantGuide.tt</DependentUpon>
-    </Compile>
+    <Compile Include="ValidationAttributes\AustralianPhoneNumber.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="RestaurantGuide.tt">

@@ -56,43 +56,43 @@
     <Compile Include="Common\IBaseRepository.cs" />
     <Compile Include="Common\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestaurantGuide.Context.cs">
+    <Compile Include="RestaurantGuideModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RestaurantGuide.Context.tt</DependentUpon>
+      <DependentUpon>RestaurantGuideModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="RestaurantGuide.Designer.cs">
+    <Compile Include="RestaurantGuideModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RestaurantGuide.edmx</DependentUpon>
+      <DependentUpon>RestaurantGuideModel.edmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <EntityDeploy Include="RestaurantGuide.edmx">
+    <EntityDeploy Include="RestaurantGuideModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RestaurantGuide.Designer.cs</LastGenOutput>
+      <LastGenOutput>RestaurantGuideModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="RestaurantGuide.edmx.diagram">
-      <DependentUpon>RestaurantGuide.edmx</DependentUpon>
+    <None Include="RestaurantGuideModel.edmx.diagram">
+      <DependentUpon>RestaurantGuideModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RestaurantGuide.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RestaurantGuide.edmx</DependentUpon>
-      <LastGenOutput>RestaurantGuide.Context.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Bauer.Developer.Test.RestaurantGuide.Domain\Bauer.Developer.Test.RestaurantGuide.Domain.csproj">
       <Project>{8200ba59-be0f-4025-b95c-c8998aa56ba3}</Project>
       <Name>Bauer.Developer.Test.RestaurantGuide.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RestaurantGuideModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RestaurantGuideModel.edmx</DependentUpon>
+      <LastGenOutput>RestaurantGuideModel.Context.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

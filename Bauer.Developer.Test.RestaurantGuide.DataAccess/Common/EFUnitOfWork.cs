@@ -13,7 +13,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess.Common
         {
         }
 
-        protected readonly BauerDeveloperTestEntities _context = new BauerDeveloperTestEntities();
+        protected readonly RestaurantGuideEntities _context = new RestaurantGuideEntities();
 
         private readonly ConcurrentDictionary<string, object> _repositories = new ConcurrentDictionary<string, object>();
         public IBaseRepository<T> Repository<T>() where T : class, IEntity
