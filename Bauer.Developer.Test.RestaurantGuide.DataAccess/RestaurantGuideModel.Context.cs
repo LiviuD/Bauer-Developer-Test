@@ -9,11 +9,13 @@
 
 namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
 {
-    using Bauer.Developer.Test.RestaurantGuide.Domain;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
+    using Bauer.Developer.Test.RestaurantGuide.Domain;
+
     public partial class RestaurantGuideEntities : DbContext
     {
         public RestaurantGuideEntities()
@@ -26,7 +28,55 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Cuisine> Cuisines { get; set; }
         public virtual DbSet<Restaurant> Restaurants { get; set; }
+    
+        public virtual int sp_UpdateRestaurant(Nullable<int> id, string name, Nullable<int> cuisineId, string chef, Nullable<byte> rating, string addressLine1, string addressLine2, string suburb, string state, string postCode, string phoneNumber)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var cuisineIdParameter = cuisineId.HasValue ?
+                new ObjectParameter("CuisineId", cuisineId) :
+                new ObjectParameter("CuisineId", typeof(int));
+    
+            var chefParameter = chef != null ?
+                new ObjectParameter("Chef", chef) :
+                new ObjectParameter("Chef", typeof(string));
+    
+            var ratingParameter = rating.HasValue ?
+                new ObjectParameter("Rating", rating) :
+                new ObjectParameter("Rating", typeof(byte));
+    
+            var addressLine1Parameter = addressLine1 != null ?
+                new ObjectParameter("AddressLine1", addressLine1) :
+                new ObjectParameter("AddressLine1", typeof(string));
+    
+            var addressLine2Parameter = addressLine2 != null ?
+                new ObjectParameter("AddressLine2", addressLine2) :
+                new ObjectParameter("AddressLine2", typeof(string));
+    
+            var suburbParameter = suburb != null ?
+                new ObjectParameter("Suburb", suburb) :
+                new ObjectParameter("Suburb", typeof(string));
+    
+            var stateParameter = state != null ?
+                new ObjectParameter("State", state) :
+                new ObjectParameter("State", typeof(string));
+    
+            var postCodeParameter = postCode != null ?
+                new ObjectParameter("PostCode", postCode) :
+                new ObjectParameter("PostCode", typeof(string));
+    
+            var phoneNumberParameter = phoneNumber != null ?
+                new ObjectParameter("PhoneNumber", phoneNumber) :
+                new ObjectParameter("PhoneNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateRestaurant", idParameter, nameParameter, cuisineIdParameter, chefParameter, ratingParameter, addressLine1Parameter, addressLine2Parameter, suburbParameter, stateParameter, postCodeParameter, phoneNumberParameter);
+        }
     }
 }

@@ -44,13 +44,9 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers
                     this.Service.SaveRestaurant(restaurant);
                     ViewBag.Message = String.Format("Saved '{0}'.", restaurant.Name);
                 }
-                catch (ValidationException vex)
+                catch (Exception)
                 {
-                    //var results = (vex.Value as List<ValidationResult>);
-                    //foreach (var result in results)
-                    //{
-                    //    ModelState.AddModelError(result.,)
-                    //        }
+                    //Log
                 }
             }
             return View(model);

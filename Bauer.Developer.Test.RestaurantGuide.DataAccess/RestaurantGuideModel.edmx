@@ -4,15 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Cuisine">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-        </EntityType>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Restaurant">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="CuisineId" Type="int" Nullable="false" />
-          <Property Name="Chef" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Chef" Type="nvarchar" MaxLength="500" />
           <Property Name="Rating" Type="tinyint" Nullable="false" />
           <Property Name="AddressLine1" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="AddressLine2" Type="varchar" MaxLength="500" />
@@ -29,65 +21,26 @@
           <Property Name="PostCode" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="RestaurantCuisine">
-          <Key>
-            <PropertyRef Name="RestaurantId" />
-            <PropertyRef Name="CuisineId" />
-          </Key>
-          <Property Name="RestaurantId" Type="int" Nullable="false" />
-          <Property Name="CuisineId" Type="int" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_RestaurantCuisine_Cusine">
-          <End Role="Cuisine" Type="Self.Cuisine" Multiplicity="1" />
-          <End Role="RestaurantCuisine" Type="Self.RestaurantCuisine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cuisine">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RestaurantCuisine">
-              <PropertyRef Name="CuisineId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RestaurantCuisine_Restaurant">
-          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
-          <End Role="RestaurantCuisine" Type="Self.RestaurantCuisine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Restaurant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="RestaurantCuisine">
-              <PropertyRef Name="RestaurantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="sp_UpdateRestaurant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="CuisineId" Type="int" Mode="In" />
+          <Parameter Name="Chef" Type="nvarchar" Mode="In" />
+          <Parameter Name="Rating" Type="tinyint" Mode="In" />
+          <Parameter Name="AddressLine1" Type="varchar" Mode="In" />
+          <Parameter Name="AddressLine2" Type="varchar" Mode="In" />
+          <Parameter Name="Suburb" Type="varchar" Mode="In" />
+          <Parameter Name="State" Type="varchar" Mode="In" />
+          <Parameter Name="PostCode" Type="varchar" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelStoreContainer">
-          <EntitySet Name="Cuisine" EntityType="Self.Cuisine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RestaurantCuisine" EntityType="Self.RestaurantCuisine" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_RestaurantCuisine_Cusine" Association="Self.FK_RestaurantCuisine_Cusine">
-            <End Role="Cuisine" EntitySet="Cuisine" />
-            <End Role="RestaurantCuisine" EntitySet="RestaurantCuisine" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RestaurantCuisine_Restaurant" Association="Self.FK_RestaurantCuisine_Restaurant">
-            <End Role="Restaurant" EntitySet="Restaurant" />
-            <End Role="RestaurantCuisine" EntitySet="RestaurantCuisine" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Cuisine">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Restaurants" Relationship="Self.RestaurantCuisine" FromRole="Cuisine" ToRole="Restaurant" />
-        </EntityType>
         <EntityType Name="Restaurant">
           <Key>
             <PropertyRef Name="Id" />
@@ -95,7 +48,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CuisineId" Type="Int32" Nullable="false" />
-          <Property Name="Chef" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Chef" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Rating" Type="Byte" Nullable="false" />
           <Property Name="AddressLine1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AddressLine2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
@@ -103,19 +56,22 @@
           <Property Name="State" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PostCode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Cuisines" Relationship="Self.RestaurantCuisine" FromRole="Restaurant" ToRole="Cuisine" />
         </EntityType>
-        <Association Name="RestaurantCuisine">
-          <End Role="Cuisine" Type="Self.Cuisine" Multiplicity="*" />
-          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="RestaurantGuideEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cuisines" EntityType="Self.Cuisine" />
           <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
-          <AssociationSet Name="RestaurantCuisine" Association="Self.RestaurantCuisine">
-            <End Role="Cuisine" EntitySet="Cuisines" />
-            <End Role="Restaurant" EntitySet="Restaurants" />
-          </AssociationSet>
+          <FunctionImport Name="sp_UpdateRestaurant">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="CuisineId" Mode="In" Type="Int32" />
+            <Parameter Name="Chef" Mode="In" Type="String" />
+            <Parameter Name="Rating" Mode="In" Type="Byte" />
+            <Parameter Name="AddressLine1" Mode="In" Type="String" />
+            <Parameter Name="AddressLine2" Mode="In" Type="String" />
+            <Parameter Name="Suburb" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="PostCode" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -123,15 +79,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="RestaurantGuideEntities">
-          <EntitySetMapping Name="Cuisines">
-            <EntityTypeMapping TypeName="Model.Cuisine">
-              <MappingFragment StoreEntitySet="Cuisine">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Restaurants">
             <EntityTypeMapping TypeName="Model.Restaurant">
               <MappingFragment StoreEntitySet="Restaurant">
@@ -148,15 +95,25 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="Model.Restaurant">
+              <ModificationFunctionMapping>
+                <UpdateFunction FunctionName="Model.Store.sp_UpdateRestaurant">
+                  <ScalarProperty Name="PhoneNumber" ParameterName="PhoneNumber" Version="Current" />
+                  <ScalarProperty Name="PostCode" ParameterName="PostCode" Version="Current" />
+                  <ScalarProperty Name="State" ParameterName="State" Version="Current" />
+                  <ScalarProperty Name="Suburb" ParameterName="Suburb" Version="Current" />
+                  <ScalarProperty Name="AddressLine2" ParameterName="AddressLine2" Version="Current" />
+                  <ScalarProperty Name="AddressLine1" ParameterName="AddressLine1" Version="Current" />
+                  <ScalarProperty Name="Rating" ParameterName="Rating" Version="Current" />
+                  <ScalarProperty Name="Chef" ParameterName="Chef" Version="Current" />
+                  <ScalarProperty Name="CuisineId" ParameterName="CuisineId" Version="Current" />
+                  <ScalarProperty Name="Name" ParameterName="Name" Version="Current" />
+                  <ScalarProperty Name="Id" ParameterName="Id" Version="Current" />
+                </UpdateFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="RestaurantCuisine" TypeName="Model.RestaurantCuisine" StoreEntitySet="RestaurantCuisine">
-            <EndProperty Name="Cuisine">
-              <ScalarProperty Name="Id" ColumnName="CuisineId" />
-            </EndProperty>
-            <EndProperty Name="Restaurant">
-              <ScalarProperty Name="Id" ColumnName="RestaurantId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateRestaurant" FunctionName="Model.Store.sp_UpdateRestaurant" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

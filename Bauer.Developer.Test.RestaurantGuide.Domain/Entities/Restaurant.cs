@@ -9,6 +9,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Domain
     [MetadataType(typeof(RestaurantMetadata))]
     public partial class Restaurant : IEntity
     {
+
     }
 
     public class RestaurantMetadata

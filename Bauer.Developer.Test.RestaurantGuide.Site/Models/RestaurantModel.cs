@@ -1,5 +1,6 @@
 ﻿using Bauer.Developer.Test.RestaurantGuide.Domain;
 using Bauer.Developer.Test.RestaurantGuide.Domain.ValidationAttributes;
+using Bauer.Developer.Test.RestaurantGuide.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -114,33 +115,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Models
             }
             set
             {
-
-                phoneNumberFormated = this.PhoneNumber = value?.Replace("(", String.Empty)?.Replace(")", String.Empty)?.Replace(" ", "");
-
-                if (phoneNumberFormated == null)
-                    return;
-                if (phoneNumberFormated.IndexOf("0") == 0)
-                {
-                    phoneNumberFormated = phoneNumberFormated.Substring(1, phoneNumberFormated.Length - 1);
-                }
-                if (phoneNumberFormated.IndexOf("+61") == 0)
-                {
-                    phoneNumberFormated = phoneNumberFormated.Substring(3, phoneNumberFormated.Length - 3);
-                }
-                if (phoneNumberFormated.IndexOf("61") == 0)
-                {
-                    phoneNumberFormated = phoneNumberFormated.Substring(2, phoneNumberFormated.Length - 2);
-                }
-
-                if (phoneNumberFormated.Length < 9)
-                {
-                    phoneNumberFormated = phoneNumberFormated.Substring(0, phoneNumberFormated.Length);
-                }
-                else
-                {
-                    phoneNumberFormated = phoneNumberFormated.Substring(0, 9);
-                }
-                this.PhoneNumber = phoneNumberFormated;
+                this.PhoneNumber = phoneNumberFormated = RestaurantService.TransformPhoneNumber(value);
             }
         }
     }
@@ -149,7 +124,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Models
     {
         [Required(ErrorMessage = "The restaurant must have a phone number")]
         [AustralianPhoneNumber(ErrorMessage = "The phone number is not a valid one in Australia")]
-        [RegularExpression(@"^\({0,1}((0|\+61|61){0,1}(2|4|3|7|8)){1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3,}$", ErrorMessage ="The phone number is not a valid one")]
+        [RegularExpression(@"^\({0,1}((0|\+61|61){0,1}(2|4|3|7|8)){1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3,}$", ErrorMessage = "The phone number is not a valid one")]
         public string PhoneNumberFormated { get; set; }
     }
 }

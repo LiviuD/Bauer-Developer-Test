@@ -1,5 +1,6 @@
 ﻿using Bauer.Developer.Test.RestaurantGuide.DataAccess.Common;
 using Bauer.Developer.Test.RestaurantGuide.Domain;
+using Bauer.Developer.Test.RestaurantGuide.Services.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -39,20 +40,55 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services
         /// </summary>
         /// <param name="restaurant">The restaurant.</param>
         /// <exception cref="ValidationException">The restaurant entity is not valid!</exception>
-        public void SaveRestaurant(Restaurant restaurant)
+        public Restaurant SaveRestaurant(Restaurant restaurant)
         {
-            var context = new ValidationContext(restaurant);
-            var results = new List<ValidationResult>();
-
-            var isValid = Validator.TryValidateObject(restaurant, context, results);
+            List<ValidationResult> results = null;
+            var isValid = restaurant.TryValidateObject(out results);
             if (!isValid)
             {
                 throw new ValidationException("The restaurant entity is not valid!", null, results);
             }
             else
             {
-                //TO DO use a procedure to update in db
+                restaurant.PhoneNumber = TransformPhoneNumber(restaurant.PhoneNumber);
+                this.UnitOfWork.Repository<Restaurant>().Update(restaurant);
+                this.UnitOfWork.SaveChanges();
+                return restaurant;
             }
+        }
+
+        /// <summary>
+        /// Transforms the phone number.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns></returns>
+        public static string TransformPhoneNumber(string phoneNumber)
+        {
+            phoneNumber = phoneNumber?.Replace("(", String.Empty)?.Replace(")", String.Empty)?.Replace(" ", "");
+
+            if (phoneNumber == null)
+                return null;
+            if (phoneNumber.IndexOf("0") == 0)
+            {
+                phoneNumber = phoneNumber.Substring(1, phoneNumber.Length - 1);
+            }
+            if (phoneNumber.IndexOf("+61") == 0)
+            {
+                phoneNumber = phoneNumber.Substring(3, phoneNumber.Length - 3);
+            }
+            if (phoneNumber.IndexOf("61") == 0)
+            {
+                phoneNumber = phoneNumber.Substring(2, phoneNumber.Length - 2);
+            }
+            if (phoneNumber.Length < 9)
+            {
+                phoneNumber = phoneNumber.Substring(0, phoneNumber.Length);
+            }
+            else
+            {
+                phoneNumber = phoneNumber.Substring(0, 9);
+            }
+            return phoneNumber;
         }
     }
 }

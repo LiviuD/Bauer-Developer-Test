@@ -41,9 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cuisine.cs">
-      <DependentUpon>RestaurantGuide.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\Cuisine.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Restaurant.cs" />
