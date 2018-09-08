@@ -22,6 +22,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Domain.ValidationAttributes
             }
 
             string valueAsString = value as string;
+            valueAsString = valueAsString.Replace(" ", String.Empty);
             return valueAsString != null 
                 && valueAsString.Length > 8 
                 && _regex.Match(valueAsString).Length > 0

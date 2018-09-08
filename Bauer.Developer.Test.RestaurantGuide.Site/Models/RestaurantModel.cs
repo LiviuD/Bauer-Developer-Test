@@ -44,29 +44,22 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Models
         public string Suburb { get; set; }
         public string State { get; set; }
         public string PostCode { get; set; }
-        public string Cuisine
+        public CuisineEnum Cuisine
         {
             get
             {
                 if (CuisineId.HasValue)
                 {
-                    return ((CuisineEnum)(CuisineId)).ToString();
+                    return (CuisineEnum)(CuisineId);
                 }
                 else
                 {
-                    return null;
+                    return CuisineEnum.American;
                 }
             }
             set
             {
-                try
-                {
-                    this.CuisineId = (int)((CuisineEnum)Enum.Parse(typeof(CuisineEnum), value));
-                }
-                catch
-                {
-                    this.CuisineId = null;
-                }
+                this.CuisineId = (int)(value);
             }
         }
 

@@ -38,7 +38,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
             //Arrange
             var restaurant = new Restaurant();
             restaurant.Name = "Test restaurant";
-            restaurant.PhoneNumber = "(04)1111 22221234";
+            restaurant.PhoneNumber = "(04)1111 2222 123456";
             restaurant.Id = 1;
             restaurant.PostCode = "1111";
             restaurant.Rating = 1;
@@ -262,7 +262,44 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
             //Arrange
             var restaurant = new Restaurant();
             restaurant.Name = "Test restaurant";
-            restaurant.PhoneNumber = "041111222";
+            restaurant.PhoneNumber = "44111122";
+            restaurant.Id = 1;
+            restaurant.PostCode = "1111";
+            restaurant.Rating = 1;
+            restaurant.State = "NSW";
+            restaurant.Suburb = "Test one";
+            restaurant.AddressLine1 = "Address 1";
+            restaurant.AddressLine2 = "Address 2";
+            restaurant.Chef = "Test chef";
+            restaurant.CuisineId = 1;
+
+            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
+            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
+            var moqUnitOfWork = new Mock<IUnitOfWork>();
+            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
+            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            ValidationException vex = null;
+            //Act
+            try
+            {
+
+                restaurantService.SaveRestaurant(restaurant);
+            }
+            catch (ValidationException v)
+            {
+                vex = v;
+            }
+            //Assert,
+            Assert.IsTrue(vex != null && (vex.Value as ICollection<ValidationResult>).Any(x => x.MemberNames.Any(name => name == nameof(restaurant.PhoneNumber))));
+        }
+
+        [TestMethod()]
+        public void WhenTryingtoSaveARestaurantWithInvalidCointainingLettersPhoneNumber()
+        {
+            //Arrange
+            var restaurant = new Restaurant();
+            restaurant.Name = "Test restaurant";
+            restaurant.PhoneNumber = "041111 2a22";
             restaurant.Id = 1;
             restaurant.PostCode = "1111";
             restaurant.Rating = 1;
@@ -294,4 +331,4 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         }
 
     }
-}
+}   

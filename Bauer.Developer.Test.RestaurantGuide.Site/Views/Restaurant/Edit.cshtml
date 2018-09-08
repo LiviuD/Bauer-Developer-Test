@@ -1,5 +1,6 @@
 ﻿@using Bauer.Developer.Test.RestaurantGuide.Domain;
 @using Bauer.Developer.Test.RestaurantGuide.Site.Models;
+@using Bauer.Developer.Test.RestaurantGuide.Domain.Extensions
 @model RestaurantModel
 @{
     ViewBag.Title = "Edit";
@@ -53,12 +54,12 @@
         </tr>
         <tr>
             <td>Rating</td>
-            <td>@Html.TextBoxFor(m => m.Rating)</td>
+            <td>@Html.EditorFor(m => m.Rating)</td>
             <td>@Html.ValidationMessageFor(x => x.Rating)</td>
         </tr>
         <tr>
             <td>Cusine</td>
-            <td>@Html.TextBoxFor(m => m.Cuisine)</td>
+            <td>@Html.DropDownList("CuisineId", Model.Cuisine.ToSelectList())  </td>
             <td>@Html.ValidationMessageFor(x => x.CuisineId)</td>
         </tr>
     </table>
@@ -68,3 +69,11 @@
 }
 <div class="message-success">@ViewBag.Message</div>
 @*@Html.ValidationSummary();*@
+@section scripts{
+<script type="text/javascript">
+    $(document).ready(
+        function () {
+            $('input#Rating').attr('min', '0').attr('max', '5');
+        });
+</script>
+}
