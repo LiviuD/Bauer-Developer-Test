@@ -70,7 +70,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers.Tests
                 Assert.Fail("The phone number is not a valid Australian one");
             }
             if(!(value.IndexOf(" ") == 4 && value.LastIndexOf(" ") == 9))
-                Assert.Fail("The phone number is not properlly formated for display");
+                Assert.Fail("The phone number is not properly formated for display");
         }
     }
 }
