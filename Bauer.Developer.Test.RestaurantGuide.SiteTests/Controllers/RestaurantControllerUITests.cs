@@ -59,8 +59,6 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers.Tests
         [Owner("Chrome")]
         public void WhenDisplayThePhoneNumberTheRequiredFormatIsApplied()
         {
-            //Uri server = new Uri("http://<YourGridserver>:80/wd/hub");
-            //driver = new RemoteWebDriver(server, driver.Capabilities);
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(this.baseURL + "/Restaurant/Edit/1");
             var value = driver.FindElementById("PhoneNumberFormated").GetAttribute("value");
