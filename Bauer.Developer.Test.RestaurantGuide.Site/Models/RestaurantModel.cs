@@ -94,7 +94,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Models
                 {
                     if (this.PhoneNumber.Length > 8)
                     {
-                        return $"(0{this.PhoneNumber.Substring(0, 1)}){this.PhoneNumber.Substring(1, 4)} {this.PhoneNumber.Substring(4, 4)}";
+                        return $"(0{this.PhoneNumber.Substring(0, 1)}) {this.PhoneNumber.Substring(1, 4)} {this.PhoneNumber.Substring(4, 4)}";
                     }
                     else
                     {

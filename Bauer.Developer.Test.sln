@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bauer.Developer.Test.Restau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bauer.Developer.Test.RestaurantGuide.ServicesTests", "Bauer.Developer.Test.RestaurantGuide.ServicesTests\Bauer.Developer.Test.RestaurantGuide.ServicesTests.csproj", "{469A3DE4-9F8C-4EFA-904A-465B821391E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bauer.Developer.Test.RestaurantGuide.SiteTests", "Bauer.Developer.Test.RestaurantGuide.SiteTests\Bauer.Developer.Test.RestaurantGuide.SiteTests.csproj", "{F0D2068E-D2FA-4CFD-BFBF-E126E28C6A26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{469A3DE4-9F8C-4EFA-904A-465B821391E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{469A3DE4-9F8C-4EFA-904A-465B821391E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{469A3DE4-9F8C-4EFA-904A-465B821391E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D2068E-D2FA-4CFD-BFBF-E126E28C6A26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D2068E-D2FA-4CFD-BFBF-E126E28C6A26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D2068E-D2FA-4CFD-BFBF-E126E28C6A26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D2068E-D2FA-4CFD-BFBF-E126E28C6A26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
