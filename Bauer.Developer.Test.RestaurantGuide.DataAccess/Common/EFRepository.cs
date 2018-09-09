@@ -107,22 +107,6 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess.Common
             return newEntry;
         }
 
-        public virtual TObject Create(TObject TObject, string userName)
-        {
-            var newEntry = DbSet.Add(TObject);
-            var entry = Context.Entry(newEntry);
-
-            SetStringProperty(entry, "CreatedBy", userName);
-            SetDateTimeProperty(entry, "CreatedDate", DateTime.Now);
-
-            SetStringProperty(entry, "LastModifiedBy", userName);
-            SetDateTimeProperty(entry, "LastModifiedDate", DateTime.Now);
-
-            if (!shareContext)
-                Context.SaveChanges();
-            return newEntry;
-        }
-
         public virtual int Count
         {
             get

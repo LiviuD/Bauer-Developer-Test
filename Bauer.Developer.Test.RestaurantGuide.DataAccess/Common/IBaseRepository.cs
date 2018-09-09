@@ -61,13 +61,6 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess.Common
         T Create(T t);
 
         /// <summary>
-        /// Create a new object to database.
-        /// </summary>
-        /// <param name="t">Specified a new object to create.</param>
-        /// <param name="userName">Current user name.</param>
-        T Create(T t, string userName);
-
-        /// <summary>
         /// Delete the object from database.
         /// </summary>
         /// <param name="t">Specified a existing object to delete.</param>        

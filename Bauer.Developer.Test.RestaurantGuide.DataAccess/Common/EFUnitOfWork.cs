@@ -8,12 +8,12 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess.Common
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-            
-        public EFUnitOfWork() 
-        {
-        }
 
-        protected readonly RestaurantGuideEntities _context = new RestaurantGuideEntities();
+        protected readonly RestaurantGuideEntities _context;
+        public EFUnitOfWork(RestaurantGuideEntities context) 
+        {
+            _context = context;
+        }
 
         private readonly ConcurrentDictionary<string, object> _repositories = new ConcurrentDictionary<string, object>();
         public IBaseRepository<T> Repository<T>() where T : class, IEntity
@@ -46,12 +46,14 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess.Common
         {
             if (disposeExisting)
                 this.Dispose();
-            return new EFUnitOfWork();
+            RestaurantGuideEntities context = new RestaurantGuideEntities();
+            return new EFUnitOfWork(context);
         }
 
         public static EFUnitOfWork GetNewContext()
         {
-            return new EFUnitOfWork();
+            RestaurantGuideEntities context = new RestaurantGuideEntities();
+            return new EFUnitOfWork(context);
         }
 
         public void Dispose()

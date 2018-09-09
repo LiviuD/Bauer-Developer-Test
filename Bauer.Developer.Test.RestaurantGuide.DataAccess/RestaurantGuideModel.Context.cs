@@ -15,7 +15,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     using Bauer.Developer.Test.RestaurantGuide.Domain;
-
+    
     public partial class RestaurantGuideEntities : DbContext
     {
         public RestaurantGuideEntities()
@@ -29,6 +29,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.DataAccess
         }
     
         public virtual DbSet<Restaurant> Restaurants { get; set; }
+        public virtual DbSet<Cuisine> Cuisines { get; set; }
     
         public virtual int sp_UpdateRestaurant(Nullable<int> id, string name, Nullable<int> cuisineId, string chef, Nullable<byte> rating, string addressLine1, string addressLine2, string suburb, string state, string postCode, string phoneNumber)
         {

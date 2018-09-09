@@ -17,6 +17,9 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            string path = Server.MapPath("~/App_Data");
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
         protected void Application_Stop()

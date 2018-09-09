@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cuisine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Restaurant">
           <Key>
             <PropertyRef Name="Id" />
@@ -35,6 +43,7 @@
           <Parameter Name="PhoneNumber" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Cuisine" EntityType="Self.Cuisine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -72,7 +81,16 @@
             <Parameter Name="PostCode" Mode="In" Type="String" />
             <Parameter Name="PhoneNumber" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Cuisines" EntityType="Model.Cuisine" />
         </EntityContainer>
+        <EntityType Name="Cuisine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -114,6 +132,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_UpdateRestaurant" FunctionName="Model.Store.sp_UpdateRestaurant" />
+          <EntitySetMapping Name="Cuisines">
+            <EntityTypeMapping TypeName="Model.Cuisine">
+              <MappingFragment StoreEntitySet="Cuisine">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
