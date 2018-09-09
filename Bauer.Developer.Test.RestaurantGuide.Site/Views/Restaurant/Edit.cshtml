@@ -68,11 +68,11 @@
     }
 }
 <div class="message-success">@ViewBag.Message</div>
-@*@Html.ValidationSummary();*@
 @section scripts{
 <script type="text/javascript">
     $(document).ready(
         function () {
+            //"force" the input to accept only between 0 and 5
             $('input#Rating').attr('min', '0').attr('max', '5');
         });
 </script>

@@ -25,6 +25,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Domain
         [MaxLength(500, ErrorMessage = "The chef name is too long, please keep it to essentials")]
         public string Chef { get; set; }
         [Required(ErrorMessage = "The restaurant must have a rating")]
+        [Range(0, 5, ErrorMessage = "The restaurant must have a rating between 0 and 5")]
         public byte Rating { get; set; }
         [Required(ErrorMessage = "The restaurant must have an address")]
         public string AddressLine1 { get; set; }

@@ -18,10 +18,14 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers
         {
 
         }
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            var restaurant = LoadRestaurant(id);
-            if (restaurant == null && id != 0)
+            if(!id.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var restaurant = LoadRestaurant(id.Value);
+            if (restaurant == null && id.Value != 0)
             {
                 ViewBag.Message = "The restaurant does not exists!";
                 return View();

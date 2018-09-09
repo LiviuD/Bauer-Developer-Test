@@ -15,27 +15,8 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
     [TestClass()]
     public class RestaurantServiceTests
     {
-        [TestMethod()]
-        public void WhenTryingtoSaveAnEmptyRestaurantEntity()
+        private Restaurant CreateAValidRestaurant()
         {
-            //Arrange
-            var restaurant = new Restaurant();
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
-            //Act
-            void act() { restaurantService.SaveRestaurant(restaurant); }
-            //Assert,
-            Assert.ThrowsException<ValidationException>(new Action(act));
-        }
-
-        [TestMethod()]
-        public void WhenTryingtoSaveAValidPhoneNumberRestaurant()
-        {
-            //Arrange
             var restaurant = new Restaurant();
             restaurant.Name = "Test restaurant";
             restaurant.PhoneNumber = "(04)1111 2222 123456";
@@ -48,18 +29,42 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
             restaurant.AddressLine2 = "Address 2";
             restaurant.Chef = "Test Chef";
             restaurant.CuisineId = 1;
+            return restaurant;
+        }
 
+        private RestaurantService MoqARestaurantService()
+        {
+            var restaurant = CreateAValidRestaurant();
             var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
             moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
             var moqUnitOfWork = new Mock<IUnitOfWork>();
             moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
             moqUnitOfWork.Setup(x => x.SaveChanges()).Returns(1);
             var restaurantService = new RestaurantService(moqUnitOfWork.Object);
-            ValidationException vex = null;
+            return restaurantService;
+        }
+
+        [TestMethod()]
+        public void WhenTryingtoSaveAnEmptyRestaurantEntity()
+        {
+            //Arrange
+            var restaurant = new Restaurant();
+            var restaurantService = MoqARestaurantService();
+            //Act
+            void act() { restaurantService.SaveRestaurant(restaurant); }
+            //Assert
+            Assert.ThrowsException<ValidationException>(new Action(act));
+        }
+
+        [TestMethod()]
+        public void WhenTryingtoSaveAValidPhoneNumberRestaurant()
+        {
+            //Arrange
+            var restaurant = CreateAValidRestaurant();
+            var restaurantService = MoqARestaurantService();
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (Exception v)
@@ -74,29 +79,13 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithNoName()
         {
             //Arrange
-            var restaurant = new Restaurant();
+            var restaurant =CreateAValidRestaurant();
             restaurant.Name = null;
-            restaurant.PhoneNumber = "0411112222";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
-            restaurant.Chef = "Test Chef";
-            restaurant.CuisineId = 1;
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch(ValidationException v)
@@ -111,29 +100,13 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithAHugeName()
         {
             //Arrange
-            var restaurant = new Restaurant();
+            var restaurant = CreateAValidRestaurant();
             restaurant.Name = new String('a', 251); 
-            restaurant.PhoneNumber = "0411112222";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
-            restaurant.Chef = "Test Chef";
-            restaurant.CuisineId = 1;
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (ValidationException v)
@@ -148,29 +121,13 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithAHugeChefName()
         {
             //Arrange
-            var restaurant = new Restaurant();
-            restaurant.Name = "Test restaurant";
-            restaurant.PhoneNumber = "0411112222";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
+            var restaurant = CreateAValidRestaurant();
             restaurant.Chef = new String('a', 501); 
-            restaurant.CuisineId = 1;
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (ValidationException v)
@@ -185,29 +142,13 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithAnEmptyChefName()
         {
             //Arrange
-            var restaurant = new Restaurant();
-            restaurant.Name = "Test restaurant";
-            restaurant.PhoneNumber = "0411112222";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
+            var restaurant = CreateAValidRestaurant();
             restaurant.Chef = String.Empty;
-            restaurant.CuisineId = 1;
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (ValidationException v)
@@ -222,67 +163,34 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithUnicodeChefName()
         {
             //Arrange
-            var restaurant = new Restaurant();
-            restaurant.Name = "Test restaurant";
-            restaurant.PhoneNumber = "0411112222";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
+            var restaurant = CreateAValidRestaurant();
             restaurant.Chef = "Un bloc din Capitală";
-            restaurant.CuisineId = 1;
 
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
-            ValidationException vex = null;
+            var restaurantService = MoqARestaurantService();
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (Exception v)
             {
                 Assert.Fail();
             }
-            //Assert,
-            Assert.IsTrue(1 == 1);
+            //Assert
+            Assert.IsTrue(restaurant.Chef == "Un bloc din Capitală");
         }
-
 
         [TestMethod()]
         public void WhenTryingtoSaveARestaurantWithInvalidPhoneNumber()
         {
             //Arrange
-            var restaurant = new Restaurant();
-            restaurant.Name = "Test restaurant";
+            var restaurant = CreateAValidRestaurant();
             restaurant.PhoneNumber = "44111122";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
-            restaurant.Chef = "Test chef";
-            restaurant.CuisineId = 1;
-
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (ValidationException v)
@@ -297,29 +205,14 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
         public void WhenTryingtoSaveARestaurantWithInvalidCointainingLettersPhoneNumber()
         {
             //Arrange
-            var restaurant = new Restaurant();
-            restaurant.Name = "Test restaurant";
+            var restaurant = CreateAValidRestaurant();
             restaurant.PhoneNumber = "041111 2a22";
-            restaurant.Id = 1;
-            restaurant.PostCode = "1111";
-            restaurant.Rating = 1;
-            restaurant.State = "NSW";
-            restaurant.Suburb = "Test one";
-            restaurant.AddressLine1 = "Address 1";
-            restaurant.AddressLine2 = "Address 2";
-            restaurant.Chef = "Test chef";
-            restaurant.CuisineId = 1;
 
-            var moqRestaurantRepository = new Mock<IBaseRepository<Restaurant>>();
-            moqRestaurantRepository.Setup(x => x.Update(restaurant)).Returns(1);
-            var moqUnitOfWork = new Mock<IUnitOfWork>();
-            moqUnitOfWork.Setup(x => x.Repository<Restaurant>()).Returns(moqRestaurantRepository.Object);
-            var restaurantService = new RestaurantService(moqUnitOfWork.Object);
+            var restaurantService = MoqARestaurantService();
             ValidationException vex = null;
             //Act
             try
             {
-
                 restaurantService.SaveRestaurant(restaurant);
             }
             catch (ValidationException v)
@@ -328,6 +221,27 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services.Tests
             }
             //Assert,
             Assert.IsTrue(vex != null && (vex.Value as ICollection<ValidationResult>).Any(x => x.MemberNames.Any(name => name == nameof(restaurant.PhoneNumber))));
+        }
+
+        [TestMethod()]
+        public void WhenTryingtoSaveARestaurantWithRatingAbove5()
+        {
+            //Arrange
+            var restaurant = CreateAValidRestaurant();
+            restaurant.Rating = 6;
+            var restaurantService = MoqARestaurantService();
+            ValidationException vex = null;
+            //Act
+            try
+            {
+                restaurantService.SaveRestaurant(restaurant);
+            }
+            catch (ValidationException v)
+            {
+                vex = v;
+            }
+            //Assert,
+            Assert.IsTrue(vex != null && (vex.Value as ICollection<ValidationResult>).Any(x => x.MemberNames.Any(name => name == nameof(restaurant.Rating))));
         }
 
     }

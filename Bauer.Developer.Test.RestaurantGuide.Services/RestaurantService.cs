@@ -51,7 +51,14 @@ namespace Bauer.Developer.Test.RestaurantGuide.Services
             else
             {
                 restaurant.PhoneNumber = TransformPhoneNumber(restaurant.PhoneNumber);
-                this.UnitOfWork.Repository<Restaurant>().Update(restaurant);
+                if(restaurant.Id == 0)
+                {
+                    this.UnitOfWork.Repository<Restaurant>().Create(restaurant);
+                }
+                else
+                {
+                    this.UnitOfWork.Repository<Restaurant>().Update(restaurant);
+                }
                 this.UnitOfWork.SaveChanges();
                 return restaurant;
             }
