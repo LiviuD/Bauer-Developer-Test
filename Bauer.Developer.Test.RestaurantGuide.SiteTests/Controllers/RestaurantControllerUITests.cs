@@ -52,6 +52,7 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers.Tests
             }
             else
             {
+                //TODO: is better that this url is kept as a TestContext variables
                 this.baseURL = "http://localhost:19139";   //default URL just to get started with
             }
         }
