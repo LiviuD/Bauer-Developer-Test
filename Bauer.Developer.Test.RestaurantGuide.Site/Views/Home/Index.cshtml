@@ -1,5 +1,6 @@
 ﻿@using Bauer.Developer.Test.RestaurantGuide.Domain
-@model List<Restaurant>
+@using Bauer.Developer.Test.RestaurantGuide.Site.Models
+@model List<RestaurantModel>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -22,9 +23,9 @@ else
             @foreach (var restaurant in Model)
             {
                 <tr>
-                    <td>@restaurant.Name</td>
-                    <td>@restaurant.PhoneNumber</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Restaurant", new { id = restaurant.Id }, new { })</td>
+                    <td class="name">@restaurant.Name</td>
+                    <td class="phone">@restaurant.PhoneNumberFormated</td>
+                    <td class="edit">@Html.ActionLink("Edit", "Edit", "Restaurant", new { id = restaurant.Id }, new { })</td>
                 </tr>
             }
         </tbody>

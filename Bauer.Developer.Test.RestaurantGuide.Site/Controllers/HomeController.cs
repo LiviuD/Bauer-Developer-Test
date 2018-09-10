@@ -1,4 +1,6 @@
 ﻿using Bauer.Developer.Test.RestaurantGuide.Services;
+using Bauer.Developer.Test.RestaurantGuide.Site.Models;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,8 +18,12 @@ namespace Bauer.Developer.Test.RestaurantGuide.Site.Controllers
 
         public ActionResult Index()
         {
-            var restaurants = Service.GetAllRestaurants();
-            return View(restaurants.ToList());
+            var restaurants = Service
+                .GetAllRestaurants();
+            if (restaurants == null)
+                return View(new List<RestaurantModel>());
+
+            return View(restaurants.ToList().Select(x=>new RestaurantModel(x)).ToList());
         }
     } 
 }
